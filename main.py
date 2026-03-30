@@ -23,8 +23,11 @@ def save_data(file_path, data):
     with open(file_path, "w") as f:
         json.dump(data, f, indent=2)
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+def hash_password(password, salt=None):
+    if salt is None:
+        salt = os.urandom(16).hex()
+    hashed = hashlib.sha256((salt + password).encode()).hexdigest()
+    return salt, hashed
 
 def obfuscate_score(score):
     # Requirement: "The scores should not be human-readable". Using base64 to store the string representation.
@@ -131,21 +134,32 @@ class QuizApp:
 
             username = input("Username: ").strip()
             password = input_with_asterisks("Password: ")
-            hashed_pw = hash_password(password)
-
             if choice == '1':
-                if username in self.users and self.users[username]["password"] == hashed_pw:
-                    self.current_user = username
-                    print(f"\nWelcome back, {username}!")
-                    break
+                if username in self.users:
+                    stored_value = self.users[username]["password"]
+                    if ":" in stored_value:
+                        salt, stored_hash = stored_value.split(":")
+                        _, input_hash = hash_password(password, salt)
+                    else:
+                        # Fallback for legacy unsalted hashes if any exist
+                        stored_hash = stored_value
+                        input_hash = hashlib.sha256(password.encode()).hexdigest()
+
+                    if input_hash == stored_hash:
+                        self.current_user = username
+                        print(f"\nWelcome back, {username}!")
+                        break
+                    else:
+                        print("\nInvalid username or password.")
                 else:
                     print("\nInvalid username or password.")
             else:
                 if username in self.users:
                     print("\nUsername already exists. Please login or pick another name.")
                 else:
+                    salt, hashed = hash_password(password)
                     self.users[username] = {
-                        "password": hashed_pw,
+                        "password": f"{salt}:{hashed}",
                         "score": obfuscate_score(0)
                     }
                     save_data(USERS_FILE, self.users)
@@ -157,13 +171,13 @@ class QuizApp:
         # Number of questions
         while True:
             try:
-                num_input = input("\nHow many questions would you like? (1-5): ").strip()
+                num_input = input("\nHow many questions would you like? (1-6): ").strip()
                 count = int(num_input)
-                if 1 <= count <= 5:
+                if 1 <= count <= 6:
                     break
-                print("Invalid. Please type a number between 1 and 5.")
+                print("Invalid. Please type a number between 1 and 6.")
             except ValueError:
-                print("Invalid. Please type a number between 1 and 5.")
+                print("Invalid. Please type a number between 1 and 6.")
         
         # Category
         while True:
@@ -185,11 +199,25 @@ class QuizApp:
             
             # Check if questions exist for this category
             available = [q for q in self.questions if (category == "All" or q["category"] == category) and not q.get("disliked", False)]
-            if not available:
+            num_avail = len(available)
+            if num_avail == 0:
                 print(f"Error: There are no available questions in category '{category}'. Please select another or add questions to '{QUESTIONS_FILE}'.")
                 continue
             
-            return min(count, len(available)), category, available
+            if count > num_avail:
+                while True:
+                    choice = input(f"Error: Only {num_avail} questions available in this category. Continue? (y/n) ").strip().lower()
+                    if choice == 'y':
+                        break
+                    elif choice == 'n':
+                        break
+                    else:
+                        print("Invalid option. Enter 'y' or 'n'.")
+                
+                if choice == 'n':
+                    continue
+            
+            return min(count, num_avail), category, available
 
     def run_quiz(self):
         while True:
@@ -232,8 +260,7 @@ class QuizApp:
 
             print("\033[H\033[2J", end="")
             print(f"Quiz Complete!")
-            # Final score per round is HIDDEN as per user feedback: "Per-run scores should not be reported"
-            print(f"Your cumulative score is now: {new_total}")
+            print(f"Your score: {round_score}/{count}")
             
             while True:
                 choice = input("\nWould you like to (r)etake the quiz or (q)uit? ").strip().lower()

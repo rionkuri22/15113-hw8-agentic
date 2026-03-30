@@ -2,5 +2,13 @@
   "testuser": {
     "password": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
     "score": "MQ=="
+  },
+  "rion": {
+    "password": "00dcfa9b58a93a4101ba55a63e777f952ef9f0d30a2983af9574d60d12fe64bb",
+    "score": "MQ=="
+  },
+  "tester": {
+    "password": "5a83f851d0227516c42ce603349fab16:16b6267799b1e633acaa63ca56b7d7b1e38e0dd577ad3ff23259a921cf9da103",
+    "score": "MA=="
   }
 }

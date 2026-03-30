@@ -2,7 +2,7 @@ Create a command-line Python quiz app that is connected to a pre-determined JSON
 
 # Required features explained in order of user flow: 
 - When loaded, display a welcome message and a local login page that prompts users for a username and password or prompts to enter new username and password for first time users. Both options should be made availble each time. Username can be shown as typed but for password, use something like asterisks to hide each character.
-- Ask user how many questions they want. Based on integer input by user in the terminal, ramdomly select that many from the default JSON file. Max selection is 5 questions and minimum 1 question.
+- Ask user how many questions they want. Based on integer input by user in the terminal, ramdomly select that many from the default JSON file. Max selection is 6 questions and minimum 1 question.
 - Ask user if they want to practice questions from a specific category. There should be 3 options: ”Python Basics", "Data Structures", "All" and these should all have an assigned key input eg) a, s, d or 1, 2, 3.
 - Quiz users by asking 1 question at a time. When get wrong, show that report is wrong and make sure to also share correct answer. When correct, report that it was correct. 
 There are 3 types of questions. 
@@ -15,9 +15,10 @@ For short answer, provide a space for the user to type in their answer.
 
 # Error handling
 - If JSON for questions does not exist when quiz is loaded, print error message that specifies that the questions file is missing and exit the program.
-- If user types in non-integer for number of questions or a number that is not between 1 and 5, print error message that specifies that the input is invalid and ask user to try again by typing a number is betwen 1 and 5. Continue this until input is something that is expected.
+- If user types in non-integer for number of questions or a number that is not between 1 and 6, print error message that specifies that the input is invalid and ask user to try again by typing a number is betwen 1 and 6. Continue this until input is something that is expected.
 - If user types in non-valid option when selecting categories like 4 or f, print error message that specifies that the input is invalid and ask user to try again by typing a valid option. Make sure to specify what the valid options are again. Continue this until input is something that is expected.
 - If user selects category for questions but there are no questions in that category, print error message that specifies that there are no questions in that category and ask user to try again by typing a valid option or by adding questions to that category in the JSON. Continue this until input is something that is expected.
+- If user selects more questions than are available in a category, show: "Error: Only {num_questions} questions available in this category. Continue? (y/n)". If "y", proceed with the available questions. If "n", return to category selection.
 
 # Acceptance criteria
 - The app launches in the terminal with command "python3 main.py" and automatically starts with prompt to login or create an account.

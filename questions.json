@@ -11,7 +11,7 @@
       ],
       "answer": "def",
       "category": "Python Basics",
-      "disliked": true
+      "disliked": false
     },
     {
       "question": "A list in Python is immutable.",
