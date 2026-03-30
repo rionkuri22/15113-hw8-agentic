@@ -1,5 +1,7 @@
 # Overview
-Created a Python quiz app with a detailed spec file for an agentic build.
+Created a command-line Python quiz app with a detailed spec file.
+Used 2 agents: 1 to build initial draft, 1 to review and report unmet requirements.
+
 Extension feature of choice: category-based filtering
 
 # How to run
