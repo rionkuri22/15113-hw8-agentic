@@ -1,0 +1,58 @@
+{
+  "questions": [
+    {
+      "question": "What keyword is used to define a function in Python?",
+      "type": "multiple_choice",
+      "options": [
+        "func",
+        "define",
+        "def",
+        "function"
+      ],
+      "answer": "def",
+      "category": "Python Basics",
+      "disliked": true
+    },
+    {
+      "question": "A list in Python is immutable.",
+      "type": "true_false",
+      "answer": "false",
+      "category": "Data Structures",
+      "disliked": false
+    },
+    {
+      "question": "What built-in function returns the number of items in a list?",
+      "type": "short_answer",
+      "answer": "len",
+      "category": "Python Basics",
+      "disliked": false
+    },
+    {
+      "question": "Python is a compiled language.",
+      "type": "true_false",
+      "answer": "false",
+      "category": "Python Basics",
+      "disliked": false
+    },
+    {
+      "question": "Which of these is a Python data structure that stores key-value pairs?",
+      "type": "multiple_choice",
+      "options": [
+        "list",
+        "tuple",
+        "dictionary",
+        "set"
+      ],
+      "answer": "dictionary",
+      "category": "Data Structures",
+      "disliked": false
+    },
+    {
+      "question": "What method is used to add an element to the end of a list?",
+      "type": "short_answer",
+      "answer": "append",
+      "category": "Data Structures",
+      "disliked": false
+    }
+  ]
+}

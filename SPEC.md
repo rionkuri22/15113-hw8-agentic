@@ -20,7 +20,7 @@ For short answer, provide a space for the user to type in their answer.
 - If user selects category for questions but there are no questions in that category, print error message that specifies that there are no questions in that category and ask user to try again by typing a valid option or by adding questions to that category in the JSON. Continue this until input is something that is expected.
 
 # Acceptance criteria
-- The app launches in the terminal and automatically starts with prompt to login or create an account.
+- The app launches in the terminal with command "python3 main.py" and automatically starts with prompt to login or create an account.
 - None of the follwing should be used: HTML, CSS, a graphical user interface or any APIs. 
 - All passwords are hidden at all times and in all places. 
 - All errors are tested and handles with relevant error messages that follow the instructions in the error handling section above.
